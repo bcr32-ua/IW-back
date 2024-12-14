@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Entity
@@ -33,6 +34,7 @@ public class Booking implements Serializable{
         joinColumns = @JoinColumn(name = "booking_id"),
         inverseJoinColumns = @JoinColumn(name = "service_id")
     )
+    private Set<Service> services;
 
     @Column(name = "start_date")
     private Date start_date;
