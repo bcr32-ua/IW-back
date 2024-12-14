@@ -23,6 +23,17 @@ public class Booking implements Serializable{
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @ManyToOne
+    @JoinColumn(name = "season_id")
+    private Season season;
+
+    @ManyToMany
+    @JoinTable(
+        name = "booking_service",
+        joinColumns = @JoinColumn(name = "booking_id"),
+        inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+
     @Column(name = "start_date")
     private Date start_date;
 
@@ -31,6 +42,9 @@ public class Booking implements Serializable{
 
     @Column(name = "total_price")
     private double total_price;
+
+    @Column(name = "notes")
+    private String notes;
 
 }
 
