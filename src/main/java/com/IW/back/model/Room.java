@@ -14,10 +14,6 @@ public class Room implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "season_id")
-    private Season season;
-
     @Column(name = "code")
     private String code;
 

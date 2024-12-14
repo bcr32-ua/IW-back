@@ -32,18 +32,27 @@ CREATE TABLE room (
     type VARCHAR(255),
     base_price VARCHAR(255),
     description VARCHAR(255),
-    active BOOLEAN,
-    season_id INTEGER,
-    FOREIGN KEY (season_id) REFERENCES season(id)
+    active BOOLEAN
                   );
 
 CREATE TABLE booking (
-id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INTEGER,
     room_id INTEGER,
+    season_id INTEGER,
     start_date DATE,
     end_date DATE,
     total_price FLOAT,
+    notes VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (room_id) REFERENCES room(id)
+    FOREIGN KEY (room_id) REFERENCES room(id),
+    FOREIGN KEY (season_id) REFERENCES season(id)
                      );
+
+CREATE TABLE booking_service (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER,
+    service_id INTEGER,
+    FOREIGN KEY (booking_id) REFERENCES booking(id),
+    FOREIGN KEY (service_id) REFERENCES service(id)
+);
