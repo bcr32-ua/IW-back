@@ -2,9 +2,9 @@
   <configuration default="false" name="BackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ALTERNATIVE_JRE_PATH" value="17" />
     <envs>
-      <env name="DATASOURCE_PASSWORD" value="admin" />
-      <env name="DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/IW" />
-      <env name="DATASOURCE_USERNAME" value="postgres" />
+      <env name="DATASOURCE_PASSWORD" value="secure_password" />
+      <env name="DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/iw_back_db" />
+      <env name="DATASOURCE_USERNAME" value="iw_user" />
       <env name="FRONTEND_URL" value="" />
     </envs>
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
