@@ -16,42 +16,53 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    // Get all users
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest().body("Error: Email is required");
+            return ResponseEntity.badRequest().body("Error: El email es obligatorio.");
         }
         if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity.badRequest().body("Error: Email is already in use");
+            return ResponseEntity.badRequest().body("Error: El email ya está en uso.");
         }
         if (user.getPassword() == null || user.getPassword().length() < 6) {
-            return ResponseEntity.badRequest().body("Error: Password must be at least 6 characters long");
+            return ResponseEntity.badRequest().body("Error: Contraseña debe de contener al menos 6 carácteres.");
         }
 
-        // Save the user
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+        User savedUser = userRepository.save(user);
+
+        return ResponseEntity.ok(savedUser.getId());
     }
 
-    // Update an existing user
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        User existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser == null) {
+            return ResponseEntity.badRequest().body("Error: Email o Contraseña inválidos");
+        }
+
+        if (!existingUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.badRequest().body("Error: Email o Contraseña inválidos");
+        }
+
+        return ResponseEntity.ok(existingUser.getId());
+    }
+
+
     @PutMapping
     public User updateUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
-    // Delete a user
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
 
-    // Get a user by ID
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
