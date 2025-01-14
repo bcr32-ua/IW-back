@@ -37,5 +37,16 @@ public class RoomController {
     public Room getRoomById(@PathVariable Long id){
         return roomRepository.findById(id).orElse(null);
     }
+
+    @PutMapping("/updateActive/{id}")
+    public Room updateActive(@PathVariable Long id){
+        Room room = roomRepository.findById(id).orElse(null);
+        if(room != null){
+            room.setActive(!room.getActive());
+            return roomRepository.save(room);
+        }
+        return null;
+    }
+
 }
 

@@ -1,8 +1,12 @@
 package com.IW.back.controller;
 
+import com.IW.back.model.Season;
+import com.IW.back.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
+
 import com.IW.back.model.Booking;
 import com.IW.back.repository.BookingRepository;
 
@@ -12,6 +16,9 @@ public class BookingController {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private SeasonRepository seasonRepository;
 
     @GetMapping
     public List<Booking> getAllBookings(){

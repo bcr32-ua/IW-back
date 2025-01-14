@@ -19,9 +19,7 @@ public class SeasonController {
     }
 
     @PostMapping
-    public Season createSeason(@RequestBody Season season){
-        return seasonRepository.save(season);
-    }
+    public Season createSeason(@RequestBody Season season){ return seasonRepository.save(season); }
 
     @PutMapping
     public Season updateSeason(@RequestBody Season season){

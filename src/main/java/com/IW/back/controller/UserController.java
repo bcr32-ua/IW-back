@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
+
 import com.IW.back.model.User;
 import com.IW.back.repository.UserRepository;
-
-@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 @RequestMapping("/user")
@@ -17,7 +17,10 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(@RequestParam(value = "type", required = false) String type) {
+        if (type != null) {
+            return userRepository.findByType(type);
+        }
         return userRepository.findAll();
     }
 
@@ -66,5 +69,10 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping("/email")
+    public User getUserByEmail(@RequestParam(value = "email") String email) {
+        return userRepository.findByEmail(email);
     }
 }
