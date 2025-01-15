@@ -3,7 +3,10 @@ package com.IW.back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.IW.back.model.User;
@@ -38,7 +41,10 @@ public class UserController {
 
         User savedUser = userRepository.save(user);
 
-        return ResponseEntity.ok(savedUser.getId());
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", savedUser.getId());
+        response.put("type", savedUser.getType());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
@@ -52,8 +58,13 @@ public class UserController {
             return ResponseEntity.badRequest().body("Error: Email o Contraseña inválidos");
         }
 
-        return ResponseEntity.ok(existingUser.getId());
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", existingUser.getId());
+        response.put("type", existingUser.getType());
+
+        return ResponseEntity.ok(response);
     }
+
 
 
     @PutMapping
