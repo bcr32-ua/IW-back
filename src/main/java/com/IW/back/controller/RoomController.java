@@ -15,9 +15,15 @@ public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
 
+
     @GetMapping
-    public List<Room> getAllRooms(@RequestParam(value = "people", required = false) int people,
-                                  @RequestParam(value = "beds", required = false) int beds,
+    public List<Room> getAllRooms(){
+        return roomRepository.findAll();
+    }
+
+    @GetMapping("/available")
+    public List<Room> getAllRooms(@RequestParam(value = "people", required = true) int people,
+                                  @RequestParam(value = "beds", required = true) int beds,
                                   @RequestParam(value = "start_date", required = true) String start_date,
                                   @RequestParam(value = "end_date", required = true) String end_date) {
 
