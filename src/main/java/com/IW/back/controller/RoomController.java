@@ -3,7 +3,9 @@ package com.IW.back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.IW.back.model.Room;
 import com.IW.back.repository.RoomRepository;
@@ -40,26 +42,36 @@ public class RoomController {
             }
         }
 
-        List<Room> availableRooms = roomRepository.findAvailableRooms(start_date, end_date);
 
-        if (people != 0) {
-            List<Room> rooms = new ArrayList<Room>();
-            for (Room room : availableRooms) {
-                if (room.getPeople() == people && type.contains(room.getType())) {
-                    rooms.add(room);
+        try {
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
+
+            List<Room> availableRooms = roomRepository.findAvailableRooms(startDate, endDate);
+
+            if (people != 0) {
+                List<Room> rooms = new ArrayList<Room>();
+                for (Room room : availableRooms) {
+                    if (room.getPeople() == people && type.contains(room.getType())) {
+                        rooms.add(room);
+                    }
                 }
+                return rooms;
             }
-            return rooms;
-        }
-        else {
-            List<Room> rooms = new ArrayList<Room>();
-            for (Room room : availableRooms) {
-                if (type.contains(room.getType())) {
-                    rooms.add(room);
+            else {
+                List<Room> rooms = new ArrayList<Room>();
+                for (Room room : availableRooms) {
+                    if (type.contains(room.getType())) {
+                        rooms.add(room);
+                    }
                 }
+                return rooms;
             }
-            return rooms;
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
+        return null;
     }
 
     @PostMapping

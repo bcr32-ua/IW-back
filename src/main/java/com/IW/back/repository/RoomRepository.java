@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.IW.back.model.Room;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -21,6 +22,6 @@ public interface RoomRepository extends JpaRepository<Room, Long>{
         )
         OR b.id IS NULL
     """)
-    List<Room> findAvailableRooms(@Param("startDate") String startDate, @Param("endDate") String endDate);
+    List<Room> findAvailableRooms(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
 
