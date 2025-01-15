@@ -48,5 +48,8 @@ public class Booking implements Serializable{
     @Column(name = "notes")
     private String notes;
 
+    @Column(name = "status")
+    private String status;
+
 }
 
