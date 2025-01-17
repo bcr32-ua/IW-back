@@ -11,7 +11,7 @@ public interface SeasonRepository extends JpaRepository<Season, Long>{
     @Query("""
         SELECT s
         FROM Season s
-        WHERE s.season_start < :date AND s.season_end > :date
+        WHERE s.season_start <= :date AND s.season_end >= :date
     """)
     Season findByDate(Date date);
 
